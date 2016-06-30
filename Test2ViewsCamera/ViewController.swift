@@ -213,6 +213,7 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
                 if connection?.supportsVideoStabilization ?? false {
                     connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.Auto
                 }
+                
                 self.movieFileOutput = movieFileOutput
                 
             }
@@ -323,28 +324,24 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
     @IBAction func toggleMovieRecording(_: AnyObject) {
         // Disable the Camera button until recording finishes, and disable the Record button until recording starts or finishes. See the
         // AVCaptureFileOutputRecordingDelegate methods.
-        
-        self.recordButton.enabled = false
+
         
         dispatch_async(self.captureSessionQueue!) {
             if !self.movieFileOutput.recording {
-                if UIDevice.currentDevice().multitaskingSupported {
-                    // Setup background task. This is needed because the -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]
-                    // callback is not received until AVCam returns to the foreground unless you request background execution time.
-                    // This also ensures that there will be time to write the file to the photo library when AVCam is backgrounded.
-                    // To conclude this background execution, -endBackgroundTask is called in
-                    // -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:] after the recorded file has been saved.
-                    self.backgroundRecordingID = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler(nil)
-                }
                 
                 // Start recording to a temporary file.
                 let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString
                 let outputFilePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName.stringByAppendingPathExtension("mov")!)
+                
+                let videoFileOutput = AVCaptureMovieFileOutput()
+                self.captureSession!.addOutput(videoFileOutput)
+                self.movieFileOutput = videoFileOutput
                 self.movieFileOutput.startRecordingToOutputFileURL(NSURL(fileURLWithPath: outputFilePath), recordingDelegate: self)
             } else {
                 self.movieFileOutput.stopRecording()
             }
         }
+        
     }
     
     
@@ -359,20 +356,11 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
     }
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-        // Note that currentBackgroundRecordingID is used to end the background task associated with this recording.
-        // This allows a new recording to be started, associated with a new UIBackgroundTaskIdentifier, once the movie file output's isRecording property
-        // is back to NO — which happens sometime after this method returns.
-        // Note: Since we use a unique file path for each recording, a new recording will not overwrite a recording currently being saved.
-        let currentBackgroundRecordingID = self.backgroundRecordingID
-        self.backgroundRecordingID = UIBackgroundTaskInvalid
-        
+    
         let cleanup: dispatch_block_t = {
             do {
                 try NSFileManager.defaultManager().removeItemAtURL(outputFileURL)
             } catch _ {}
-            if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
-                UIApplication.sharedApplication().endBackgroundTask(currentBackgroundRecordingID)
-            }
         }
         
         var success = true
@@ -414,14 +402,11 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         // Enable the Camera and Record buttons to let the user switch camera and start another recording.
         dispatch_async( dispatch_get_main_queue()) {
             // Only enable the ability to change camera if the device has more than one camera.
-            
             self.recordButton.enabled = true
             self.recordButton.setTitle(NSLocalizedString("Record", comment: "Recording button record title"), forState: .Normal)
         }
+
     }
-    
-    
-    
 }
 
 
