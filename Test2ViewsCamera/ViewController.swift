@@ -22,6 +22,7 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
     @IBOutlet weak var someView: PreviewView!
     @IBOutlet weak var changeCameraButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var timerLabel: UILabel!
     
     private var movieFileOutput: AVCaptureMovieFileOutput!
     private var stillImageOutput: AVCaptureStillImageOutput!
@@ -34,6 +35,8 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
     var currentVideoDimensions: CMVideoDimensions?
     var feedViews: [GLKViewWithBounds]?
     var isFront = false
+    var seconds: Double = 0
+    var timer: NSTimer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +97,7 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         self.view.bringSubviewToFront(someView)
         self.view.bringSubviewToFront(recordButton)
         self.view.bringSubviewToFront(captureChain)
+        self.view.bringSubviewToFront(timerLabel)
     }
     
     
@@ -320,31 +324,6 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
     }
     
     
-    
-    @IBAction func toggleMovieRecording(_: AnyObject) {
-        // Disable the Camera button until recording finishes, and disable the Record button until recording starts or finishes. See the
-        // AVCaptureFileOutputRecordingDelegate methods.
-
-        
-        dispatch_async(self.captureSessionQueue!) {
-            if !self.movieFileOutput.recording {
-                
-                // Start recording to a temporary file.
-                let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString
-                let outputFilePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName.stringByAppendingPathExtension("mov")!)
-                
-                let videoFileOutput = AVCaptureMovieFileOutput()
-                self.captureSession!.addOutput(videoFileOutput)
-                self.movieFileOutput = videoFileOutput
-                self.movieFileOutput.startRecordingToOutputFileURL(NSURL(fileURLWithPath: outputFilePath), recordingDelegate: self)
-            } else {
-                self.movieFileOutput.stopRecording()
-            }
-        }
-        
-    }
-    
-    
     //MARK: File Output Recording Delegate
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
@@ -406,6 +385,51 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
             self.recordButton.setTitle(NSLocalizedString("Record", comment: "Recording button record title"), forState: .Normal)
         }
 
+    }
+    
+    
+    
+    
+    @IBAction func toggleMovieRecording(_: AnyObject) {
+        // Disable the Camera button until recording finishes, and disable the Record button until recording starts or finishes. See the
+        // AVCaptureFileOutputRecordingDelegate methods.
+        
+
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
+        
+        let queue: dispatch_queue_t = dispatch_queue_create("somequeue", DISPATCH_QUEUE_SERIAL)
+        
+        dispatch_async(queue) {
+            if !self.movieFileOutput.recording {
+                
+                // Start recording to a temporary file.
+                let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString
+                let outputFilePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName.stringByAppendingPathExtension("mov")!)
+                
+                let videoFileOutput = AVCaptureMovieFileOutput()
+                self.captureSession!.addOutput(videoFileOutput)
+                self.movieFileOutput = videoFileOutput
+                self.movieFileOutput.startRecordingToOutputFileURL(NSURL(fileURLWithPath: outputFilePath), recordingDelegate: self)
+            } else {
+                self.timer?.invalidate()
+                self.timerLabel.text = ""
+                self.movieFileOutput.stopRecording()
+            }
+        }
+        
+    }
+    
+    func update() {
+        self.seconds += 0.1
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            let hours = round(self.seconds/60/60)
+            let minutes = round((self.seconds - hours*60) / 60)
+            let seconds = round((self.seconds - (minutes*60+hours*60)) / 60)
+            
+            self.timerLabel.text = "\(hours):\(minutes):\(seconds)"
+        }
     }
 }
 

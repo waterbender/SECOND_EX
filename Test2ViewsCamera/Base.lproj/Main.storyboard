@@ -30,17 +30,6 @@
                                     <constraint firstAttribute="height" constant="496" id="8Bs-do-3eK"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0Y-h0-UEc">
-                                <rect key="frame" x="200" y="515" width="49" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="49" id="IvU-n7-LXy"/>
-                                    <constraint firstAttribute="height" constant="30" id="tMB-YF-xQb"/>
-                                </constraints>
-                                <state key="normal" title="Record"/>
-                                <connections>
-                                    <action selector="toggleMovieRecording:" destination="eLU-Kr-31o" eventType="touchUpInside" id="Fap-sC-23m"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNH-Nq-iQ2">
                                 <rect key="frame" x="529" y="28" width="36" height="48"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -53,20 +42,43 @@
                                     <action selector="changeCamera:" destination="eLU-Kr-31o" eventType="touchUpInside" id="Jyx-tO-0U5"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0Y-h0-UEc">
+                                <rect key="frame" x="142" y="510" width="49" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="IvU-n7-LXy"/>
+                                    <constraint firstAttribute="height" constant="30" id="tMB-YF-xQb"/>
+                                </constraints>
+                                <state key="normal" title="Record"/>
+                                <connections>
+                                    <action selector="toggleMovieRecording:" destination="eLU-Kr-31o" eventType="touchUpInside" id="Fap-sC-23m"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Va6-WR-AiK">
+                                <rect key="frame" x="204" y="510" width="123" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="123" id="TFD-eG-qUw"/>
+                                    <constraint firstAttribute="height" constant="30" id="U8v-mz-ziu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="G2w-ri-H6s" secondAttribute="trailing" id="2TU-Kp-0pa"/>
+                            <constraint firstItem="Va6-WR-AiK" firstAttribute="leading" secondItem="I0Y-h0-UEc" secondAttribute="trailing" constant="13" id="8Xn-Fc-QAL"/>
                             <constraint firstAttribute="trailing" secondItem="CbI-y7-dm0" secondAttribute="trailing" constant="60" id="F67-Kk-J5t"/>
                             <constraint firstItem="G2w-ri-H6s" firstAttribute="top" secondItem="bzS-uB-fso" secondAttribute="top" constant="84" id="Nv8-cv-G0G"/>
-                            <constraint firstItem="I0Y-h0-UEc" firstAttribute="leading" secondItem="bzS-uB-fso" secondAttribute="leading" constant="200" id="RKa-hC-Vl5"/>
+                            <constraint firstItem="I0Y-h0-UEc" firstAttribute="leading" secondItem="bzS-uB-fso" secondAttribute="leading" constant="142" id="RKa-hC-Vl5"/>
                             <constraint firstItem="G2w-ri-H6s" firstAttribute="top" secondItem="qBw-eL-38l" secondAttribute="bottom" constant="64" id="TEu-dj-Qqj"/>
                             <constraint firstItem="YNH-Nq-iQ2" firstAttribute="top" secondItem="qBw-eL-38l" secondAttribute="bottom" constant="8" id="ZFD-pG-CHz"/>
                             <constraint firstItem="G2w-ri-H6s" firstAttribute="leading" secondItem="bzS-uB-fso" secondAttribute="leading" id="ccW-0V-eI8"/>
                             <constraint firstAttribute="trailing" secondItem="YNH-Nq-iQ2" secondAttribute="trailing" constant="35" id="kmM-j0-iM3"/>
                             <constraint firstItem="G2w-ri-H6s" firstAttribute="leading" secondItem="bzS-uB-fso" secondAttribute="leading" id="l79-0v-hV3"/>
+                            <constraint firstItem="Va6-WR-AiK" firstAttribute="top" secondItem="CbI-y7-dm0" secondAttribute="bottom" constant="53" id="sbT-sG-26f"/>
                             <constraint firstItem="CbI-y7-dm0" firstAttribute="top" secondItem="YNH-Nq-iQ2" secondAttribute="bottom" constant="140" id="tll-6v-H65"/>
-                            <constraint firstItem="I0Y-h0-UEc" firstAttribute="top" secondItem="CbI-y7-dm0" secondAttribute="bottom" constant="58" id="xDZ-67-lPF"/>
+                            <constraint firstItem="I0Y-h0-UEc" firstAttribute="top" secondItem="CbI-y7-dm0" secondAttribute="bottom" constant="53" id="xDZ-67-lPF"/>
                             <constraint firstItem="CbI-y7-dm0" firstAttribute="leading" secondItem="bzS-uB-fso" secondAttribute="leading" constant="55" id="yHS-Nl-jXx"/>
                         </constraints>
                     </view>
@@ -75,6 +87,7 @@
                         <outlet property="changeCameraButton" destination="YNH-Nq-iQ2" id="lvC-UF-f5x"/>
                         <outlet property="recordButton" destination="I0Y-h0-UEc" id="oHs-Lq-LHA"/>
                         <outlet property="someView" destination="CbI-y7-dm0" id="TWT-il-dYw"/>
+                        <outlet property="timerLabel" destination="Va6-WR-AiK" id="Yfb-TH-AIY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lQl-9M-Kpw" sceneMemberID="firstResponder"/>
