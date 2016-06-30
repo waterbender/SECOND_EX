@@ -17,7 +17,7 @@ class GLKViewWithBounds: GLKView {
 
 
 class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDelegate {
-
+    
     var ciContext: CIContext = CIContext()
     var eaglContext: EAGLContext?
     var captureSession: AVCaptureSession?
@@ -29,7 +29,7 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        
         
         let session = AVCaptureSession()
         let inputDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
@@ -57,21 +57,44 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         replicatorLayer.frame = CGRectMake(0, 0, self.view.bounds.size.width/5, CGFloat(replicatorViewHeight)/5)
         
         var transform:CATransform3D  = CATransform3DIdentity;
-
+        
         let k = (self.view.frame.width/2) / self.view.frame.height
         let xInset = CGFloat(150.0)
         transform = CATransform3DScale(transform, 0.5, k, 1)
         transform = CATransform3DTranslate(transform, xInset, 300, 1)
-    
         
         replicatorLayer.instanceCount = replicatorInstances;
         replicatorLayer.instanceTransform = transform
-
+        
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        //always fill the view
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        
+//        previewLayer.addSublayer(blurEffectView.layer)
         replicatorLayer.addSublayer(previewLayer)
+        previewLayer.addSublayer(blurEffectView.layer)
         self.view.layer.addSublayer(replicatorLayer)
+        self.view.addSubview(blurEffectView)
+        
+        bringSublayerToFront(blurEffectView.layer, view: self.view)
+
+        replicatorLayer.removeFromSuperlayer()
+        view.layer.addSublayer(replicatorLayer)
+                
         session.startRunning()
     }
-
+    
+    func bringSublayerToFront(layer: CALayer, view: UIView)
+    {
+        layer.removeFromSuperlayer()
+        view.layer.addSublayer(layer)
+        
+    }
+    
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
