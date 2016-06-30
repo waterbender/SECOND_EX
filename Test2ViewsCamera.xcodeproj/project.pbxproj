@@ -406,7 +406,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Test2ViewsCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = testCamera.Test2ViewsCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = testCamera.Tes21t2ViewsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -417,7 +417,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Test2ViewsCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = testCamera.Test2ViewsCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = testCamera.Tes21t2ViewsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -487,6 +487,7 @@
 				EF64DB8C1D247A5C00A7F4BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF64DB8D1D247A5C00A7F4BE /* Build configuration list for PBXNativeTarget "Test2ViewsCameraTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +496,7 @@
 				EF64DB8F1D247A5C00A7F4BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF64DB901D247A5C00A7F4BE /* Build configuration list for PBXNativeTarget "Test2ViewsCameraUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +505,7 @@
 				EF64DB921D247A5C00A7F4BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
