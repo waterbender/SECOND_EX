@@ -193,20 +193,36 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
             self.captureSession = AVCaptureSession()
             self.captureSession!.sessionPreset = preset;
             
+            
             // create and configure video data output
             
             let videoDataOutput: AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
             videoDataOutput.videoSettings = outputSettings;
             videoDataOutput.setSampleBufferDelegate(self, queue: self.captureSessionQueue)
             
-            // begin configure capture sess
+            // begin configure capture session
             self.captureSession?.beginConfiguration()
             
             let movieFileOutput = AVCaptureMovieFileOutput()
+            if ((self.captureSession?.canAddOutput(videoDataOutput)) == nil)
+            {
+                let string = "Cannot add video data output"
+                self._showAlertViewWithMessage(string)
+                self.captureSession = nil
+                
+                return;
+            } else {
+                
+                let connection = movieFileOutput.connectionWithMediaType(AVMediaTypeVideo)
+                if connection?.supportsVideoStabilization ?? false {
+                    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.Auto
+                }
+                
+                self.movieFileOutput = movieFileOutput
+                
+            }
             
-            self.movieFileOutput = movieFileOutput
             // connect the video device input and video data and still image outputs
-
             self.captureSession?.addInput(videoDeviceInput)
             self.captureSession?.addOutput(videoDataOutput)
             
@@ -379,17 +395,18 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         // AVCaptureFileOutputRecordingDelegate methods.
         
 
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "update", userInfo: nil, repeats: true)
         
-        let queue: dispatch_queue_t = dispatch_queue_create("somequeue", DISPATCH_QUEUE_SERIAL)
-        
-        dispatch_async(queue) {
+        dispatch_async(self.captureSessionQueue!) {
             if !self.movieFileOutput.recording {
                 
                 // Start recording to a temporary file.
                 let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString
                 let outputFilePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(outputFileName.stringByAppendingPathExtension("mov")!)
-
+                
+                let videoFileOutput = AVCaptureMovieFileOutput()
+                self.captureSession!.addOutput(videoFileOutput)
+                self.movieFileOutput = videoFileOutput
                 self.movieFileOutput.startRecordingToOutputFileURL(NSURL(fileURLWithPath: outputFilePath), recordingDelegate: self)
             } else {
                 self.timer?.invalidate()
