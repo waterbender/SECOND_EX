@@ -81,9 +81,6 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         
         bringSublayerToFront(blurEffectView.layer, view: self.view)
 
-        replicatorLayer.removeFromSuperlayer()
-        view.layer.addSublayer(replicatorLayer)
-                
         session.startRunning()
     }
     
