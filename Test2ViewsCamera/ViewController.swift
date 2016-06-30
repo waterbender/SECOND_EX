@@ -18,7 +18,8 @@ class GLKViewWithBounds: GLKView {
 
 class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureFileOutputRecordingDelegate {
     
-    @IBOutlet weak var someView: UIView!
+    @IBOutlet weak var captureChain: UIImageView!
+    @IBOutlet weak var someView: PreviewView!
     @IBOutlet weak var changeCameraButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
     
@@ -86,8 +87,13 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         self.feedViews?.append(feedView)
         self.feedViews?.append(feedAboveView)
         
+        // Setup the preview view.
+        self.someView.session = self.captureSession
+        
+        
         self.view.bringSubviewToFront(someView)
         self.view.bringSubviewToFront(recordButton)
+        self.view.bringSubviewToFront(captureChain)
     }
     
     
@@ -294,16 +300,21 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         return .LightContent
     }
     
-    @IBAction func changeCamera(sender: AnyObject) {
+    @IBAction func changeCamera(sender: UIButton) {
         
         self.ciContext = CIContext()
         self.eaglContext = nil
         self.captureSession?.stopRunning()
         self.captureSession = nil
         self.feedViews = nil
-        
-        
+   
         isFront = !isFront
+        if !isFront {
+            sender.setImage(UIImage(named: "ic_camera_rear_white"), forState: .Normal)
+        } else {
+            sender.setImage(UIImage(named: "ic_camera_front_white"), forState: .Normal)
+        }
+
         loadCamera()
     }
     
@@ -325,11 +336,6 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
                     // -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:] after the recorded file has been saved.
                     self.backgroundRecordingID = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler(nil)
                 }
-                
-                // Update the orientation on the movie file output video connection before starting recording.
-                let connection = self.movieFileOutput.connectionWithMediaType(AVMediaTypeVideo)
-                let previewLayer = self.view.layer as! AVCaptureVideoPreviewLayer
-                connection.videoOrientation = previewLayer.connection.videoOrientation
                 
                 // Start recording to a temporary file.
                 let outputFileName = NSProcessInfo.processInfo().globallyUniqueString as NSString

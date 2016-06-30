@@ -14,6 +14,7 @@
 		EF64DB701D247A5C00A7F4BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF64DB6E1D247A5C00A7F4BE /* LaunchScreen.storyboard */; };
 		EF64DB7B1D247A5C00A7F4BE /* Test2ViewsCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64DB7A1D247A5C00A7F4BE /* Test2ViewsCameraTests.swift */; };
 		EF64DB861D247A5C00A7F4BE /* Test2ViewsCameraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64DB851D247A5C00A7F4BE /* Test2ViewsCameraUITests.swift */; };
+		EFD3B3031D2566980009F1F4 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD3B3021D2566980009F1F4 /* PreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		EF64DB811D247A5C00A7F4BE /* Test2ViewsCameraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test2ViewsCameraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64DB851D247A5C00A7F4BE /* Test2ViewsCameraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test2ViewsCameraUITests.swift; sourceTree = "<group>"; };
 		EF64DB871D247A5C00A7F4BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFD3B3021D2566980009F1F4 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				EF64DB651D247A5C00A7F4BE /* AppDelegate.swift */,
 				EF64DB671D247A5C00A7F4BE /* ViewController.swift */,
+				EFD3B3021D2566980009F1F4 /* PreviewView.swift */,
 				EF64DB691D247A5C00A7F4BE /* Main.storyboard */,
 				EF64DB6C1D247A5C00A7F4BE /* Assets.xcassets */,
 				EF64DB6E1D247A5C00A7F4BE /* LaunchScreen.storyboard */,
@@ -261,6 +264,7 @@
 			files = (
 				EF64DB681D247A5C00A7F4BE /* ViewController.swift in Sources */,
 				EF64DB661D247A5C00A7F4BE /* AppDelegate.swift in Sources */,
+				EFD3B3031D2566980009F1F4 /* PreviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
