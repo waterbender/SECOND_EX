@@ -42,13 +42,13 @@
                                     <action selector="changeCamera:" destination="eLU-Kr-31o" eventType="touchUpInside" id="Jyx-tO-0U5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0Y-h0-UEc">
-                                <rect key="frame" x="142" y="510" width="49" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0Y-h0-UEc">
+                                <rect key="frame" x="142" y="510" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="49" id="IvU-n7-LXy"/>
+                                    <constraint firstAttribute="width" constant="30" id="IvU-n7-LXy"/>
                                     <constraint firstAttribute="height" constant="30" id="tMB-YF-xQb"/>
                                 </constraints>
-                                <state key="normal" title="Record"/>
+                                <state key="normal" title="Record" image="testRed"/>
                                 <connections>
                                     <action selector="toggleMovieRecording:" destination="eLU-Kr-31o" eventType="touchUpInside" id="Fap-sC-23m"/>
                                 </connections>
@@ -67,7 +67,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="G2w-ri-H6s" secondAttribute="trailing" id="2TU-Kp-0pa"/>
-                            <constraint firstItem="Va6-WR-AiK" firstAttribute="leading" secondItem="I0Y-h0-UEc" secondAttribute="trailing" constant="13" id="8Xn-Fc-QAL"/>
+                            <constraint firstItem="Va6-WR-AiK" firstAttribute="leading" secondItem="I0Y-h0-UEc" secondAttribute="trailing" constant="32" id="8Xn-Fc-QAL"/>
                             <constraint firstAttribute="trailing" secondItem="CbI-y7-dm0" secondAttribute="trailing" constant="60" id="F67-Kk-J5t"/>
                             <constraint firstItem="G2w-ri-H6s" firstAttribute="top" secondItem="bzS-uB-fso" secondAttribute="top" constant="84" id="Nv8-cv-G0G"/>
                             <constraint firstItem="I0Y-h0-UEc" firstAttribute="leading" secondItem="bzS-uB-fso" secondAttribute="leading" constant="142" id="RKa-hC-Vl5"/>
@@ -98,5 +98,6 @@
     <resources>
         <image name="CaptureDevice" width="1400" height="1798"/>
         <image name="ic_camera_rear_white" width="24" height="24"/>
+        <image name="testRed" width="320" height="320"/>
     </resources>
 </document>

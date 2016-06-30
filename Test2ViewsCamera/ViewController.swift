@@ -330,7 +330,7 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         // Enable the Record button to let the user stop the recording.
         dispatch_async( dispatch_get_main_queue()) {
             self.recordButton.enabled = true
-            self.recordButton.setTitle(NSLocalizedString("Stop", comment: "Recording button stop title"), forState: .Normal)
+            self.recordButton.setImage(UIImage(named: "testStop"), forState: .Normal)
         }
     }
     
@@ -382,7 +382,9 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         dispatch_async( dispatch_get_main_queue()) {
             // Only enable the ability to change camera if the device has more than one camera.
             self.recordButton.enabled = true
-            self.recordButton.setTitle(NSLocalizedString("Record", comment: "Recording button record title"), forState: .Normal)
+            self.recordButton.setImage(UIImage(named: "testRed"), forState: .Normal)
+
+            
         }
 
     }
@@ -422,9 +424,9 @@ class ViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDeleg
         
         dispatch_async(dispatch_get_main_queue()) {
             
-            let hours = round(self.seconds/60/60)
+            let hours = round((self.seconds/60)/60)
             let minutes = round((self.seconds - hours*60) / 60)
-            let seconds = round((self.seconds - (minutes*60+hours*60)) / 60)
+            let seconds = round(self.seconds - minutes*60-hours*60*60)
             
             self.timerLabel.text = "\(hours):\(minutes):\(seconds)"
         }
